@@ -1,2 +1,4 @@
 # Swipe
 GUYZ WASSUP THIS IS THE MAIN README FILE IDK WHAT TO PUT IN IT
+fuxk this hackathon
+
