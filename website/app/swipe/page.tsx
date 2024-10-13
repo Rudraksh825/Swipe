@@ -1,37 +1,37 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useRef, createRef } from 'react';
 import Image from "next/image";
 import TinderCard from 'react-tinder-card';
+import researchMatchLogo from "/Users/manit/Manit Document/Programming/Swipe/swipe1.png";
+import placeholderImage from "/Users/manit/Manit Document/Programming/Swipe/website/logom.png";
+import connectIcon from "/Users/manit/Manit Document/Programming/Swipe/Green Tick Icon.png";
+import passIcon from "/Users/manit/Manit Document/Programming/Swipe/Red Cross Image.webp";
 
-// Example database of researchers
-const db = [
-  {
-    name: 'Dr. Alice Johnson',
-    age: 35,
-    bio: 'Quantum Physics Researcher'
-  },
-  {
-    name: 'Prof. Bob Smith',
-    age: 42,
-    bio: 'Marine Biology Expert'
-  },
-  {
-    name: 'Dr. Carol Williams',
-    age: 38,
-    bio: 'AI and Machine Learning Specialist'
-  },
-  {
-    name: 'Dr. David Brown',
-    age: 45,
-    bio: 'Climate Change Researcher'
-  },
-  {
-    name: 'Prof. Emily Davis',
-    age: 40,
-    bio: 'Neuroscience Pioneer'
-  }
-]
+// Function to generate random data
+const generateRandomPerson = () => {
+  const names = ['Alice', 'Bob', 'Carol', 'David', 'Emily', 'Frank', 'Grace', 'Henry', 'Isabel', 'Jack'];
+  const surnames = ['Johnson', 'Smith', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+  const educations = ['Ph.D.', 'M.Sc.', 'B.Sc.', 'M.A.', 'B.A.'];
+  const professions = ['Researcher', 'Professor', 'Scientist', 'Engineer', 'Analyst'];
+  const fields = ['Computer Science', 'Physics', 'Biology', 'Chemistry', 'Mathematics', 'Environmental Science', 'Psychology', 'Neuroscience', 'Astronomy', 'Geology'];
+  const researchTopics = ['Artificial Intelligence', 'Quantum Computing', 'Climate Change', 'Gene Editing', 'Renewable Energy', 'Dark Matter', 'Neurodegenerative Diseases', 'Machine Learning', 'Sustainable Agriculture', 'Nanotechnology'];
+  
+  const randomElement = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+  
+  return {
+    name: `${randomElement(names)} ${randomElement(surnames)}`,
+    age: Math.floor(Math.random() * (65 - 25) + 25),
+    education: `${randomElement(educations)} in ${randomElement(fields)}`,
+    profession: randomElement(professions),
+    field: randomElement(fields),
+    projects: Math.floor(Math.random() * 5) + 1,
+    research: randomElement(researchTopics),
+    bio: `Passionate about ${randomElement(fields)} with a focus on ${randomElement(researchTopics)}. Committed to advancing scientific knowledge and solving real-world problems.`
+  };
+};
+
+const db = Array(10).fill(null).map(generateRandomPerson);
 
 // Info Form Page Component
 function InfoFormPage({ onSubmit }: { onSubmit: (userData: any) => void }) {
@@ -121,43 +121,78 @@ function InfoFormPage({ onSubmit }: { onSubmit: (userData: any) => void }) {
 
 // Swipe Page Component
 function SwipePage() {
+  const [currentIndex, setCurrentIndex] = useState(db.length - 1);
   const [lastDirection, setLastDirection] = useState<string | undefined>();
+  const currentIndexRef = useRef(currentIndex);
 
-  const swiped = (direction: string, nameToDelete: string) => {
-    console.log('removing: ' + nameToDelete);
-    setLastDirection(direction);
+  const childRefs = useRef<any[]>([]);
+  if (childRefs.current.length !== db.length) {
+    childRefs.current = Array(db.length).fill(0).map((i) => childRefs.current[i] || createRef());
+  }
+
+  const updateCurrentIndex = (val: number) => {
+    setCurrentIndex(val);
+    currentIndexRef.current = val;
   };
 
-  const outOfFrame = (name: string) => {
-    console.log(name + ' left the screen!');
+  const canSwipe = currentIndex >= 0;
+
+  const swiped = (direction: string, nameToDelete: string, index: number) => {
+    setLastDirection(direction);
+    updateCurrentIndex(index - 1);
+  };
+
+  const outOfFrame = (name: string, idx: number) => {
+    console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
+    currentIndexRef.current >= idx && childRefs.current[idx].current.restoreCard();
+  };
+
+  const swipe = async (dir: string) => {
+    if (canSwipe && currentIndex < db.length) {
+      await childRefs.current[currentIndex].current.swipe(dir);
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
-      <h1 className="text-3xl font-bold text-white mb-8">Research Match</h1>
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+      <div className="mb-12 mt-8">
+        <Image
+          src={researchMatchLogo}
+          alt="Research Match Logo"
+          width={200}
+          height={50}
+          priority
+        />
+      </div>
       
-      <div className="relative w-full max-w-sm h-[70vh] max-h-[600px]">
+      <div className="relative w-80 h-[600px]">
         {db.map((character, index) =>
-          <TinderCard 
-            className="absolute left-0 right-0 mx-auto" 
+          <TinderCard
+            ref={childRefs.current[index]}
+            className="absolute"
             key={character.name}
-            onSwipe={(dir: string) => swiped(dir, character.name)} 
-            onCardLeftScreen={() => outOfFrame(character.name)}
+            onSwipe={(dir) => swiped(dir, character.name, index)}
+            onCardLeftScreen={() => outOfFrame(character.name, index)}
             swipeRequirementType="position"
             swipeThreshold={100}
           >
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden w-full h-full" style={{zIndex: db.length - index}}>
-              <div className="relative w-full h-4/5">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden w-80 h-[600px]" style={{zIndex: db.length - index}}>
+              <div className="relative w-full h-48">
                 <Image
-                  src="/logom.png"
+                  src={placeholderImage}
                   alt={character.name}
                   layout="fill"
-                  objectFit="contain"
+                  objectFit="cover"
                 />
               </div>
-              <div className="p-4 h-1/5">
+              <div className="p-4 h-[432px] overflow-y-auto">
                 <h2 className="text-xl font-semibold">{character.name}, {character.age}</h2>
-                <p className="text-gray-600 text-sm">{character.bio}</p>
+                <p className="text-gray-700"><strong>Education:</strong> {character.education}</p>
+                <p className="text-gray-700"><strong>Profession:</strong> {character.profession}</p>
+                <p className="text-gray-700"><strong>Field:</strong> {character.field}</p>
+                <p className="text-gray-700"><strong>Projects:</strong> {character.projects} ongoing research projects</p>
+                <p className="text-gray-700"><strong>Research:</strong> {character.research}</p>
+                <p className="text-gray-600 mt-2"><strong>Bio:</strong> {character.bio}</p>
               </div>
             </div>
           </TinderCard>
@@ -165,22 +200,20 @@ function SwipePage() {
       </div>
 
       <div className="flex justify-center mt-8 space-x-4">
-        <button className="bg-white rounded-full p-4 shadow-lg" onClick={() => swiped('left', 'manual swipe')}>
+        <button className="bg-white rounded-full p-4 shadow-lg" onClick={() => swipe('left')}>
           <Image
-            src="/icons/close.svg"
+            src={passIcon}
             alt="Pass"
             width={30}
             height={30}
-            className="text-red-500"
           />
         </button>
-        <button className="bg-white rounded-full p-4 shadow-lg" onClick={() => swiped('right', 'manual swipe')}>
+        <button className="bg-white rounded-full p-4 shadow-lg" onClick={() => swipe('right')}>
           <Image
-            src="/icons/heart.svg"
+            src={connectIcon}
             alt="Connect"
             width={30}
             height={30}
-            className="text-green-500"
           />
         </button>
       </div>
@@ -199,8 +232,8 @@ export default function MainApp() {
   const [userData, setUserData] = useState<any | null>(null);
 
   const handleFormSubmit = (data: any) => {
-    setUserData(data); // Save user data and move to the swipe page
-    console.log("User Data Saved: ", data); // Debugging user data save
+    setUserData(data);
+    console.log("User Data Saved: ", data);
   };
 
   return (
