@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -17,14 +17,16 @@ export default function SignUpPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
-      <Image
-        src="/logom.png"
-        alt="Research Match Logo"
-        width={100}
-        height={100}
-        className="mb-8"
-      />
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <div className="w-full max-w-md fixed top-8 left-1/2 transform -translate-x-1/2">
+        <Image
+          src="/swipe1.png"
+          alt="Swipe Logo"
+          width={200}
+          height={50}
+          className="mx-auto"
+        />
+      </div>
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-24"> {/* Increased margin-top here */}
         <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <input
