@@ -23,6 +23,7 @@ export default function SwipePage() {
   const currentIndexRef = useRef<number | null>(null);
   const [matches, setMatches] = useState<string[]>([]);
   const [swipedResearchers, setSwipedResearchers] = useState<Set<string>>(new Set());
+  const [initialLoad, setInitialLoad] = useState(true);
 
   const childRefs = useRef<React.RefObject<any>[]>([]);
   const router = useRouter();
@@ -57,16 +58,27 @@ export default function SwipePage() {
         const filteredResearchers = data
           .filter((researcher: Researcher) => researcher.Score >= 7 && !swipedSet.has(researcher.Name))
           .sort((a: Researcher, b: Researcher) => b.Score - a.Score);
-        setResearchers(filteredResearchers);
-        setCurrentIndex(filteredResearchers.length - 1);
-        currentIndexRef.current = filteredResearchers.length - 1;
+
+        if (initialLoad) {
+          setResearchers(filteredResearchers);
+          setCurrentIndex(filteredResearchers.length - 1);
+          currentIndexRef.current = filteredResearchers.length - 1;
+          setInitialLoad(false);
+        } else {
+          setResearchers(prevResearchers => {
+            const newResearchers = filteredResearchers.filter(
+              (researcher: Researcher) => !prevResearchers.some(pr => pr.Name === researcher.Name)
+            );
+            return [...prevResearchers, ...newResearchers];
+          });
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchResearchers();
-  }, []);
+  }, [initialLoad]);
 
   useEffect(() => {
     childRefs.current = Array(researchers.length)

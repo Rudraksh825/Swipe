@@ -15,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Research Match",
+  title: "Swift",
   description: "Connect with researchers and collaborators",
 };
 
