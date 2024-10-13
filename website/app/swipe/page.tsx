@@ -3,10 +3,6 @@
 import { useState, useRef, createRef } from 'react';
 import Image from "next/image";
 import TinderCard from 'react-tinder-card';
-import researchMatchLogo from "/Users/manit/Manit Document/Programming/Swipe/swipe1.png";
-import placeholderImage from "/Users/manit/Manit Document/Programming/Swipe/website/logom.png";
-import connectIcon from "/Users/manit/Manit Document/Programming/Swipe/Green Tick Icon.png";
-import passIcon from "/Users/manit/Manit Document/Programming/Swipe/Red Cross Image.webp";
 
 // Function to generate random data
 const generateRandomPerson = () => {
@@ -157,7 +153,7 @@ function SwipePage() {
     <div className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
       <div className="mb-12 mt-8">
         <Image
-          src={researchMatchLogo}
+          src={"/swipe1.png"}
           alt="Research Match Logo"
           width={200}
           height={50}
@@ -179,7 +175,7 @@ function SwipePage() {
             <div className="bg-white rounded-lg shadow-lg overflow-hidden w-80 h-[600px]" style={{zIndex: db.length - index}}>
               <div className="relative w-full h-48">
                 <Image
-                  src={placeholderImage}
+                  src={"/logom.png"}
                   alt={character.name}
                   layout="fill"
                   objectFit="cover"
@@ -202,7 +198,7 @@ function SwipePage() {
       <div className="flex justify-center mt-8 space-x-4">
         <button className="bg-white rounded-full p-4 shadow-lg" onClick={() => swipe('left')}>
           <Image
-            src={passIcon}
+            src={"/Red Cross Image.webp"}
             alt="Pass"
             width={30}
             height={30}
@@ -210,7 +206,7 @@ function SwipePage() {
         </button>
         <button className="bg-white rounded-full p-4 shadow-lg" onClick={() => swipe('right')}>
           <Image
-            src={connectIcon}
+            src={"/Green Tick Icon.png"}
             alt="Connect"
             width={30}
             height={30}
