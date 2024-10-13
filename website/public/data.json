@@ -1,0 +1,322 @@
+[
+    {
+        "Name": "Emma Johnson",
+        "Age": 28,
+        "Education": "Ph.D. Computer Science",
+        "GitHub": "github.com/emmaj",
+        "Bio": "Researching advanced algorithms for natural language processing",
+        "Score": 10
+    },
+    {
+        "Name": "Liam Chen",
+        "Age": 32,
+        "Education": "M.S. Data Science",
+        "GitHub": "github.com/liamchen",
+        "Bio": "Conducting research on deep learning models for predictive analytics",
+        "Score": 8
+    },
+    {
+        "Name": "Sophia Patel",
+        "Age": 25,
+        "Education": "M.S. Cognitive Science",
+        "GitHub": "github.com/sophiap",
+        "Bio": "Investigating human-computer interaction in virtual environments",
+        "Score": 5
+    },
+    {
+        "Name": "Noah Kim",
+        "Age": 30,
+        "Education": "Ph.D. Robotics",
+        "GitHub": "github.com/noahk",
+        "Bio": "Researching swarm robotics and collective behavior algorithms",
+        "Score": 4
+    },
+    {
+        "Name": "Olivia Martinez",
+        "Age": 27,
+        "Education": "M.S. Bioinformatics",
+        "GitHub": "github.com/oliviam",
+        "Bio": "Studying genomic data analysis techniques for personalized medicine",
+        "Score": 3
+    },
+    {
+        "Name": "Ethan Taylor",
+        "Age": 35,
+        "Education": "Ph.D. Quantum Computing",
+        "GitHub": "github.com/ethant",
+        "Bio": "Exploring quantum algorithms for optimization problems",
+        "Score": 4
+    },
+    {
+        "Name": "Ava Wong",
+        "Age": 29,
+        "Education": "Ph.D. Neuroscience",
+        "GitHub": "github.com/avaw",
+        "Bio": "Researching brain-computer interfaces for assistive technologies",
+        "Score": 4
+    },
+    {
+        "Name": "Mason Davis",
+        "Age": 31,
+        "Education": "M.S. Cybersecurity",
+        "GitHub": "github.com/masond",
+        "Bio": "Investigating novel approaches to network intrusion detection",
+        "Score": 5
+    },
+    {
+        "Name": "Isabella Brown",
+        "Age": 26,
+        "Education": "M.S. Human-Computer Interaction",
+        "GitHub": "github.com/isabellab",
+        "Bio": "Studying the impact of UI design on user cognitive load",
+        "Score": 5
+    },
+    {
+        "Name": "William Lee",
+        "Age": 33,
+        "Education": "Ph.D. Materials Science",
+        "GitHub": "github.com/williaml",
+        "Bio": "Researching nanomaterials for next-generation energy storage",
+        "Score": 2
+    },
+    {
+        "Name": "Mia Garcia",
+        "Age": 28,
+        "Education": "Ph.D. Artificial Intelligence",
+        "GitHub": "github.com/miag",
+        "Bio": "Developing explainable AI models for healthcare applications",
+        "Score": 8
+    },
+    {
+        "Name": "James Wilson",
+        "Age": 34,
+        "Education": "Ph.D. Computational Linguistics",
+        "GitHub": "github.com/jamesw",
+        "Bio": "Researching multilingual sentiment analysis in social media",
+        "Score": 9
+    },
+    {
+        "Name": "Charlotte Anderson",
+        "Age": 29,
+        "Education": "M.S. Environmental Science",
+        "GitHub": "github.com/charlottea",
+        "Bio": "Analyzing big data for climate change prediction models",
+        "Score": 5
+    },
+    {
+        "Name": "Benjamin Moore",
+        "Age": 27,
+        "Education": "M.S. Computer Vision",
+        "GitHub": "github.com/benjaminm",
+        "Bio": "Investigating 3D scene reconstruction from 2D images",
+        "Score": 6
+    },
+    {
+        "Name": "Amelia Thompson",
+        "Age": 31,
+        "Education": "Ph.D. Biomedical Engineering",
+        "GitHub": "github.com/ameliat",
+        "Bio": "Researching nanoparticle drug delivery systems",
+        "Score": 2
+    },
+    {
+        "Name": "Lucas White",
+        "Age": 30,
+        "Education": "Ph.D. Machine Learning",
+        "GitHub": "github.com/lucasw",
+        "Bio": "Studying reinforcement learning for autonomous systems",
+        "Score": 7
+    },
+    {
+        "Name": "Harper Lewis",
+        "Age": 26,
+        "Education": "M.S. Applied Mathematics",
+        "GitHub": "github.com/harperl",
+        "Bio": "Researching cryptographic protocols for secure multi-party computation",
+        "Score": 4
+    },
+    {
+        "Name": "Alexander Scott",
+        "Age": 32,
+        "Education": "Ph.D. Information Systems",
+        "GitHub": "github.com/alexanders",
+        "Bio": "Investigating blockchain technologies for secure data sharing",
+        "Score": 3
+    },
+    {
+        "Name": "Evelyn Clark",
+        "Age": 28,
+        "Education": "Ph.D. Cognitive Neuroscience",
+        "GitHub": "github.com/evelync",
+        "Bio": "Studying the neural correlates of decision-making under uncertainty",
+        "Score": 4
+    },
+    {
+        "Name": "Daniel Rodriguez",
+        "Age": 35,
+        "Education": "Ph.D. Quantum Information",
+        "GitHub": "github.com/danielr",
+        "Bio": "Researching quantum error correction codes for fault-tolerant quantum computing",
+        "Score": 3
+    },
+    {
+        "Name": "Rachel Nguyen",
+        "Age": 29,
+        "Education": "Ph.D. Machine Learning",
+        "GitHub": "github.com/racheln",
+        "Bio": "Researching interpretable AI models for medical diagnosis",
+        "Score": 8
+    },
+    {
+        "Name": "Oliver Schmidt",
+        "Age": 33,
+        "Education": "Ph.D. Quantum Physics",
+        "GitHub": "github.com/olivers",
+        "Bio": "Studying quantum entanglement for secure communication protocols",
+        "Score": 3
+    },
+    {
+        "Name": "Zoe Carter",
+        "Age": 27,
+        "Education": "M.S. Computational Biology",
+        "GitHub": "github.com/zoec",
+        "Bio": "Developing algorithms for protein folding prediction",
+        "Score": 5
+    },
+    {
+        "Name": "Felix Morales",
+        "Age": 31,
+        "Education": "Ph.D. Computer Networks",
+        "GitHub": "github.com/felixm",
+        "Bio": "Investigating SDN architectures for 5G and beyond",
+        "Score": 4
+    },
+    {
+        "Name": "Nora Tanaka",
+        "Age": 30,
+        "Education": "Ph.D. Human-Robot Interaction",
+        "GitHub": "github.com/norat",
+        "Bio": "Researching adaptive robotic behaviors in social environments",
+        "Score": 5
+    },
+    {
+        "Name": "Dylan Foster",
+        "Age": 28,
+        "Education": "M.S. Data Science",
+        "GitHub": "github.com/dylanf",
+        "Bio": "Applying machine learning to climate model uncertainties",
+        "Score": 6
+    },
+    {
+        "Name": "Aria Patel",
+        "Age": 32,
+        "Education": "Ph.D. Cognitive Science",
+        "GitHub": "github.com/ariap",
+        "Bio": "Studying the effects of VR on spatial cognition and memory",
+        "Score": 5
+    },
+    {
+        "Name": "Leo Chavez",
+        "Age": 26,
+        "Education": "M.S. Cybersecurity",
+        "GitHub": "github.com/leoc",
+        "Bio": "Researching post-quantum cryptography algorithms",
+        "Score": 4
+    },
+    {
+        "Name": "Maya Singh",
+        "Age": 34,
+        "Education": "Ph.D. Bioengineering",
+        "GitHub": "github.com/mayas",
+        "Bio": "Developing microfluidic devices for single-cell analysis",
+        "Score": 2
+    },
+    {
+        "Name": "Caleb Wright",
+        "Age": 29,
+        "Education": "Ph.D. Natural Language Processing",
+        "GitHub": "github.com/calebw",
+        "Bio": "Investigating cross-lingual transfer learning in low-resource languages",
+        "Score": 10
+    },
+    {
+        "Name": "Sophie Lambert",
+        "Age": 31,
+        "Education": "Ph.D. Computer Vision",
+        "GitHub": "github.com/sophiel",
+        "Bio": "Researching 3D object detection in autonomous driving systems",
+        "Score": 6
+    },
+    {
+        "Name": "Aiden Kozlov",
+        "Age": 28,
+        "Education": "M.S. Robotics",
+        "GitHub": "github.com/aidenk",
+        "Bio": "Studying soft robotics for minimally invasive surgery",
+        "Score": 3
+    },
+    {
+        "Name": "Lily Chen",
+        "Age": 30,
+        "Education": "Ph.D. Bioinformatics",
+        "GitHub": "github.com/lilyc",
+        "Bio": "Developing machine learning models for predicting drug-protein interactions",
+        "Score": 6
+    },
+    {
+        "Name": "Isaac Okafor",
+        "Age": 33,
+        "Education": "Ph.D. Theoretical Computer Science",
+        "GitHub": "github.com/isaaco",
+        "Bio": "Researching quantum algorithms for graph problems",
+        "Score": 5
+    },
+    {
+        "Name": "Elena Rodriguez",
+        "Age": 27,
+        "Education": "M.S. Neurotechnology",
+        "GitHub": "github.com/elenar",
+        "Bio": "Investigating brain-computer interfaces for motor rehabilitation",
+        "Score": 4
+    },
+    {
+        "Name": "Marcus Kim",
+        "Age": 32,
+        "Education": "Ph.D. Artificial Intelligence",
+        "GitHub": "github.com/marcusk",
+        "Bio": "Studying continual learning in dynamic environments",
+        "Score": 8
+    },
+    {
+        "Name": "Fiona Murphy",
+        "Age": 29,
+        "Education": "Ph.D. Computational Chemistry",
+        "GitHub": "github.com/fionam",
+        "Bio": "Researching molecular dynamics simulations for drug discovery",
+        "Score": 3
+    },
+    {
+        "Name": "Jasper Tran",
+        "Age": 31,
+        "Education": "M.S. Information Security",
+        "GitHub": "github.com/jaspert",
+        "Bio": "Developing privacy-preserving techniques for federated learning",
+        "Score": 6
+    },
+    {
+        "Name": "Vera Ivanova",
+        "Age": 28,
+        "Education": "Ph.D. Cognitive Neuroscience",
+        "GitHub": "github.com/verai",
+        "Bio": "Studying the neural basis of attention and decision-making",
+        "Score": 4
+    },
+    {
+        "Name": "Hugo Larsson",
+        "Age": 30,
+        "Education": "Ph.D. Quantum Information",
+        "GitHub": "github.com/hugol",
+        "Bio": "Researching quantum machine learning algorithms",
+        "Score": 5
+    }
+]

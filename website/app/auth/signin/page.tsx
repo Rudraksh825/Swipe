@@ -11,7 +11,7 @@ export default function SignInPage() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Here you would typically handle the sign-in logic
-        // For now, we'll just redirect to the swipe page
+        // After successful sign-in, redirect directly to the swipe page
         router.push('/swipe');
     };
 

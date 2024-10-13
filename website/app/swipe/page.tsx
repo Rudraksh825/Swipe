@@ -1,130 +1,39 @@
 'use client'
 
-import { useState, useRef, createRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import TinderCard from 'react-tinder-card';
 
-// Function to generate random data
-const generateRandomPerson = () => {
-  const names = ['Alice', 'Bob', 'Carol', 'David', 'Emily', 'Frank', 'Grace', 'Henry', 'Isabel', 'Jack'];
-  const surnames = ['Johnson', 'Smith', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
-  const educations = ['Ph.D.', 'M.Sc.', 'B.Sc.', 'M.A.', 'B.A.'];
-  const professions = ['Researcher', 'Professor', 'Scientist', 'Engineer', 'Analyst'];
-  const fields = ['Computer Science', 'Physics', 'Biology', 'Chemistry', 'Mathematics', 'Environmental Science', 'Psychology', 'Neuroscience', 'Astronomy', 'Geology'];
-  const researchTopics = ['Artificial Intelligence', 'Quantum Computing', 'Climate Change', 'Gene Editing', 'Renewable Energy', 'Dark Matter', 'Neurodegenerative Diseases', 'Machine Learning', 'Sustainable Agriculture', 'Nanotechnology'];
-  
-  const randomElement = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
-  
-  return {
-    name: `${randomElement(names)} ${randomElement(surnames)}`,
-    age: Math.floor(Math.random() * (65 - 25) + 25),
-    education: `${randomElement(educations)} in ${randomElement(fields)}`,
-    profession: randomElement(professions),
-    field: randomElement(fields),
-    projects: Math.floor(Math.random() * 5) + 1,
-    research: randomElement(researchTopics),
-    bio: `Passionate about ${randomElement(fields)} with a focus on ${randomElement(researchTopics)}. Committed to advancing scientific knowledge and solving real-world problems.`
-  };
-};
-
-const db = Array(10).fill(null).map(generateRandomPerson);
-
-// Info Form Page Component
-function InfoFormPage({ onSubmit }: { onSubmit: (userData: any) => void }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    education: '',
-    github: '',
-    age: '',
-    bio: '' // Add the bio field
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form Data Submitted: ", formData); // Debugging to ensure form submission
-    onSubmit(formData); // Pass the form data to the parent component
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
-      <h1 className="text-3xl font-bold text-white mb-8">Enter Your Information</h1>
-      
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg p-8 shadow-lg max-w-md w-full">
-        <div className="mb-4">
-          <label className="block text-gray-700">Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Education:</label>
-          <input
-            type="text"
-            name="education"
-            value={formData.education}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">GitHub Profile:</label>
-          <input
-            type="url"
-            name="github"
-            value={formData.github}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Age:</label>
-          <input
-            type="number"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Short Bio:</label>
-          <textarea
-            name="bio"
-            value={formData.bio}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-            placeholder="Write a short bio about yourself..."
-            required
-          />
-        </div>
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-lg">Submit</button>
-      </form>
-    </div>
-  );
+// Update the Researcher interface
+interface Researcher {
+  Name: string;
+  Age: number;
+  Education: string;
+  GitHub: string;
+  Bio: string;
+  Score: number;
 }
 
-// Swipe Page Component
 function SwipePage() {
-  const [currentIndex, setCurrentIndex] = useState(db.length - 1);
+  const [researchers, setResearchers] = useState<Researcher[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [lastDirection, setLastDirection] = useState<string | undefined>();
   const currentIndexRef = useRef(currentIndex);
 
-  const childRefs = useRef<any[]>([]);
-  if (childRefs.current.length !== db.length) {
-    childRefs.current = Array(db.length).fill(0).map((i) => childRefs.current[i] || createRef());
-  }
+  useEffect(() => {
+    // Fetch the data from data.json
+    fetch('/data.json')
+      .then(response => response.json())
+      .then(data => {
+        // Filter researchers with score >= 7 and sort by score in descending order
+        const filteredResearchers = data
+          .filter((researcher: Researcher) => researcher.Score >= 7)
+          .sort((a: Researcher, b: Researcher) => b.Score - a.Score);
+        setResearchers(filteredResearchers);
+        setCurrentIndex(filteredResearchers.length - 1);
+        currentIndexRef.current = filteredResearchers.length - 1;
+      });
+  }, []);
 
   const updateCurrentIndex = (val: number) => {
     setCurrentIndex(val);
@@ -140,12 +49,12 @@ function SwipePage() {
 
   const outOfFrame = (name: string, idx: number) => {
     console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
-    currentIndexRef.current >= idx && childRefs.current[idx].current.restoreCard();
+    // Don't restore the card here
   };
 
   const swipe = async (dir: string) => {
-    if (canSwipe && currentIndex < db.length) {
-      await childRefs.current[currentIndex].current.swipe(dir);
+    if (canSwipe && currentIndex >= 0) {
+      await swiped(dir, researchers[currentIndex].Name, currentIndex);
     }
   };
 
@@ -162,41 +71,41 @@ function SwipePage() {
       </div>
       
       <div className="relative w-80 h-[600px]">
-        {db.map((character, index) =>
+        {researchers.map((researcher, index) => (
           <TinderCard
-            ref={childRefs.current[index]}
             className="absolute"
-            key={character.name}
-            onSwipe={(dir) => swiped(dir, character.name, index)}
-            onCardLeftScreen={() => outOfFrame(character.name, index)}
+            key={researcher.Name}
+            onSwipe={(dir) => swiped(dir, researcher.Name, index)}
+            onCardLeftScreen={() => outOfFrame(researcher.Name, index)}
             swipeRequirementType="position"
             swipeThreshold={100}
           >
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden w-80 h-[600px]" style={{zIndex: db.length - index}}>
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden w-80 h-[600px]" style={{zIndex: researchers.length - index}}>
               <div className="relative w-full h-48">
                 <Image
                   src={"/logom.png"}
-                  alt={character.name}
+                  alt={researcher.Name}
                   layout="fill"
                   objectFit="cover"
                 />
               </div>
               <div className="p-4 h-[432px] overflow-y-auto">
-                <h2 className="text-xl font-semibold">{character.name}, {character.age}</h2>
-                <p className="text-gray-700"><strong>Education:</strong> {character.education}</p>
-                <p className="text-gray-700"><strong>Profession:</strong> {character.profession}</p>
-                <p className="text-gray-700"><strong>Field:</strong> {character.field}</p>
-                <p className="text-gray-700"><strong>Projects:</strong> {character.projects} ongoing research projects</p>
-                <p className="text-gray-700"><strong>Research:</strong> {character.research}</p>
-                <p className="text-gray-600 mt-2"><strong>Bio:</strong> {character.bio}</p>
+                <h2 className="text-xl font-semibold">{researcher.Name}, {researcher.Age}</h2>
+                <p className="text-gray-700"><strong>Education:</strong> {researcher.Education}</p>
+                <p className="text-gray-700"><strong>GitHub:</strong> {researcher.GitHub}</p>
+                <p className="text-gray-600 mt-2"><strong>Bio:</strong> {researcher.Bio}</p>
               </div>
             </div>
           </TinderCard>
-        )}
+        ))}
       </div>
 
       <div className="flex justify-center mt-8 space-x-4">
-        <button className="bg-white rounded-full p-4 shadow-lg" onClick={() => swipe('left')}>
+        <button 
+          className="bg-white rounded-full p-4 shadow-lg" 
+          onClick={() => swipe('left')}
+          disabled={!canSwipe}
+        >
           <Image
             src={"/Red Cross Image.webp"}
             alt="Pass"
@@ -204,7 +113,11 @@ function SwipePage() {
             height={30}
           />
         </button>
-        <button className="bg-white rounded-full p-4 shadow-lg" onClick={() => swipe('right')}>
+        <button 
+          className="bg-white rounded-full p-4 shadow-lg" 
+          onClick={() => swipe('right')}
+          disabled={!canSwipe}
+        >
           <Image
             src={"/Green Tick Icon.png"}
             alt="Connect"
@@ -223,22 +136,4 @@ function SwipePage() {
   );
 }
 
-// Main Component to switch between the two pages
-export default function MainApp() {
-  const [userData, setUserData] = useState<any | null>(null);
-
-  const handleFormSubmit = (data: any) => {
-    setUserData(data);
-    console.log("User Data Saved: ", data);
-  };
-
-  return (
-    <>
-      {!userData ? (
-        <InfoFormPage onSubmit={handleFormSubmit} />
-      ) : (
-        <SwipePage />
-      )}
-    </>
-  );
-}
+export default SwipePage;

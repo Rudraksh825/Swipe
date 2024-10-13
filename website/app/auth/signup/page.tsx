@@ -11,8 +11,8 @@ export default function SignUpPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Here you would typically handle the sign-up logic
-    // For now, we'll just redirect to the swipe page
-    router.push('/swipe');
+    // After successful sign-up, redirect to the user info page
+    router.push('/user-info');
   };
 
   return (
