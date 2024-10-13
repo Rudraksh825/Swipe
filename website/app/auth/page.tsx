@@ -3,18 +3,20 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function AuthChoicePage() {
+export default function AuthPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
-      <Image
-        src="/logom.png"
-        alt="Research Match Logo"
-        width={100}
-        height={100}
-        className="mb-8"
-      />
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Welcome to Research Match</h2>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/swipe1.png"
+            alt="Research Match Logo"
+            width={150}
+            height={150}
+            priority
+          />
+        </div>
+        <h2 className="text-2xl font-bold text-center text-gray-700 mb-8">Sign In to Research Match</h2>
         <div className="space-y-4">
           <Link href="/auth/signup" className="block w-full bg-blue-600 text-white font-bold py-2 px-4 rounded text-center hover:bg-blue-700 transition duration-300">
             Sign Up

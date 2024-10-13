@@ -7,7 +7,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
       <Image
-        src="/logom.png"
+        src="/swipe1.png"
         alt="Research Match Logo"
         width={200}
         height={200}
