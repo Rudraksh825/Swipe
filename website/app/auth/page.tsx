@@ -1,58 +1,65 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 
-export default function SignInPage() {
+export default function AuthPage() {
+    const [isSignUp, setIsSignUp] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const router = useRouter();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Here you would typically handle the sign-in logic
-        // For now, we'll just redirect to the swipe page
-        router.push('/swipe');
+        // Here you would typically validate the input and send a request to your backend
+        localStorage.setItem('isAuthenticated', 'true');
+        
+        if (isSignUp) {
+            // If signing up, go to user-info page to complete profile
+            router.push('/user-info');
+        } else {
+            // If signing in, go directly to swipe page
+            router.push('/swipe');
+        }
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
-            <div className="w-full max-w-md fixed top-8 left-1/2 transform -translate-x-1/2">
-                <Image
-                    src="/swipe1.png"
-                    alt="Swipe Logo"
-                    width={200}
-                    height={50}
-                    className="mx-auto"
-                />
+        <div className="min-h-screen flex flex-col items-center justify-start pt-16 bg-gradient-to-r from-blue-500 to-purple-600">
+            <div className="mb-12">
+                <Image src="/swipe1.png" alt="Swipe Logo" width={200} height={50} />
             </div>
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-16"> {/* Added margin-top here */}
-                <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
+            <div className="bg-white p-8 rounded-lg shadow-md w-96">
+                <h2 className="text-2xl font-bold mb-4 text-center">{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="email"
                         placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="w-full p-2 mb-4 border rounded"
                         required
                     />
                     <input
                         type="password"
                         placeholder="Password"
-                        className="w-full p-2 mb-6 border rounded"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full p-2 mb-4 border rounded"
                         required
                     />
-                    <button
-                        type="submit"
-                        className="w-full bg-green-600 text-white font-bold py-2 px-4 rounded hover:bg-green-700 transition duration-300"
-                    >
-                        Sign In
+                    <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300">
+                        {isSignUp ? 'Sign Up' : 'Sign In'}
                     </button>
                 </form>
-                <p className="mt-8 text-center"> {/* Adjust margin here if needed */}
-                    Don't have an account?{' '}
-                    <Link href="/auth/signup" className="text-blue-600 hover:underline">
-                        Sign Up
-                    </Link>
+                <p className="mt-4 text-center">
+                    {isSignUp ? 'Already have an account?' : "Don't have an account?"}
+                    <button
+                        onClick={() => setIsSignUp(!isSignUp)}
+                        className="text-blue-500 ml-2 hover:underline"
+                    >
+                        {isSignUp ? 'Sign In' : 'Sign Up'}
+                    </button>
                 </p>
             </div>
         </div>
