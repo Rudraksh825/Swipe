@@ -1,9 +1,10 @@
 'use client'
 
+import { useState } from 'react';
 import Image from "next/image";
-import { useState } from "react";
 import TinderCard from 'react-tinder-card';
 
+// Example database of researchers
 const db = [
   {
     name: 'Dr. Alice Johnson',
@@ -32,17 +33,104 @@ const db = [
   }
 ]
 
-export default function SwipePage() {
+// Info Form Page Component
+function InfoFormPage({ onSubmit }: { onSubmit: (userData: any) => void }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    education: '',
+    github: '',
+    age: '',
+    bio: '' // Add the bio field
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form Data Submitted: ", formData); // Debugging to ensure form submission
+    onSubmit(formData); // Pass the form data to the parent component
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+      <h1 className="text-3xl font-bold text-white mb-8">Enter Your Information</h1>
+      
+      <form onSubmit={handleSubmit} className="bg-white rounded-lg p-8 shadow-lg max-w-md w-full">
+        <div className="mb-4">
+          <label className="block text-gray-700">Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Education:</label>
+          <input
+            type="text"
+            name="education"
+            value={formData.education}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">GitHub Profile:</label>
+          <input
+            type="url"
+            name="github"
+            value={formData.github}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Age:</label>
+          <input
+            type="number"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Short Bio:</label>
+          <textarea
+            name="bio"
+            value={formData.bio}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+            placeholder="Write a short bio about yourself..."
+            required
+          />
+        </div>
+        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-lg">Submit</button>
+      </form>
+    </div>
+  );
+}
+
+// Swipe Page Component
+function SwipePage() {
   const [lastDirection, setLastDirection] = useState<string | undefined>();
 
   const swiped = (direction: string, nameToDelete: string) => {
-    console.log('removing: ' + nameToDelete)
-    setLastDirection(direction)
-  }
+    console.log('removing: ' + nameToDelete);
+    setLastDirection(direction);
+  };
 
   const outOfFrame = (name: string) => {
-    console.log(name + ' left the screen!')
-  }
+    console.log(name + ' left the screen!');
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
@@ -103,5 +191,25 @@ export default function SwipePage() {
         </div>
       )}
     </div>
+  );
+}
+
+// Main Component to switch between the two pages
+export default function MainApp() {
+  const [userData, setUserData] = useState<any | null>(null);
+
+  const handleFormSubmit = (data: any) => {
+    setUserData(data); // Save user data and move to the swipe page
+    console.log("User Data Saved: ", data); // Debugging user data save
+  };
+
+  return (
+    <>
+      {!userData ? (
+        <InfoFormPage onSubmit={handleFormSubmit} />
+      ) : (
+        <SwipePage />
+      )}
+    </>
   );
 }
